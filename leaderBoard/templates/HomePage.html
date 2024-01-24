@@ -1,0 +1,127 @@
+<!-- leaderboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+
+        /* Style for buttons */
+
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <H1>BlackLight Programming Assignment </H1>
+        <H1>By- Aman Sharma (aman20021@iiitd.ac.in) </H1>
+        <H1>2020021  </H1>
+        <form action="{% url 'Home' %}" method="get" class="home-link">
+                <button type="submit">Leaderboard</button>
+        </form>
+        <!-- Button container -->
+        <div class="button-container">
+            <form action="{% url 'current_week_leaderboard' %}" method="get" class="leaderboard-link">
+                <button type="submit">Current Week Leaderboard</button>
+            </form>
+            <form action="{% url 'last_week_leaderboard' %}" method="get" class="last-week-form">
+                <label for="country">Select Country:</label>
+                <select name="country" id="country" required>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                    <option value="IN">India</option>
+                </select>
+                <button type="submit">Last Week Leaderboard</button>
+            </form>
+            <form action="{% url 'user_rank' %}" method="get" class="user-id-form">
+                <label for="user_id">Enter User ID:</label>
+                <input type="text" name="user_id" id="user_id" required>
+                <button type="submit">User Rank</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Country</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in leaderboard %}
+                <tr>
+                    <td>{{ entry.UID }}</td>
+                    <td>{{ entry.name }}</td>
+                    <td>{{ entry.score }}</td>
+                    <td>{{ entry.country }}</td>
+                    {% if entry.rank  %}
+                        <td>{{ entry.rank }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+
+</html>
